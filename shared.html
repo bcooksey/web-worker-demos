@@ -1,0 +1,48 @@
+<!DOCTYPE html >
+<html>
+    <head>
+        <script type="text/javascript" src="jquery-1.9.1.js"></script>
+        <script src="/prettify.js"></script>
+        <link href="/prettify.css" type="text/css" rel="stylesheet" />
+    </head>
+    <body>
+       <h1>Shared Worker Demo (Chatty Parrot)</h1>
+       Parrot Says: <span id="response">Nothin Yet</span>
+       <br/>
+       <button id="hello">Say Hello</button>
+
+        <h2>Code:</h2>
+        <pre id="code" class="prettyprint"/>
+
+        <script type="text/javascript">
+            var worker = new SharedWorker('chatty-worker.js');
+            var guid = Math.round(Math.random() * 1000);
+            
+            // Note we have to deal with port now
+            worker.port.onmessage = function(e) {
+                var msg = '';
+                if (e.data.speaker == guid)
+                    msg = 'You';
+                else
+                    msg = e.data.speaker;
+                
+                msg += ' just said "' + e.data.message + '". That is message number ' + e.data.counter;
+                    $("#response").html(msg);
+            };
+
+            $("#hello").on('click', function() {
+                // Messages must go to our port
+                worker.port.postMessage({message: 'hello', guid: guid});
+            });
+
+            // You are supposed to start the worker.
+            // From experience, the forst postMessage will do this for you
+            worker.port.start();
+        </script>
+
+        <script type="text/javascript">
+            $('#code').html($('script')[2].textContent);
+            prettyPrint();
+        </script>
+    </body>
+</html>

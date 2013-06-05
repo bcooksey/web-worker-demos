@@ -1,0 +1,41 @@
+<!DOCTYPE html >
+<html>
+    <head>
+        <script src="/jquery-1.9.1.js"></script>
+        <script src="/prettify.js"></script>
+        <link href="/prettify.css" type="text/css" rel="stylesheet" />
+    </head>
+    <body>
+       <h1>Dedicated Web Worker Demo (Rude Parrot)</h1>
+       Parrot Says: <span id="response">Nothin Yet</span>
+       <br/>
+       <button id="hello">Say Hello</button>
+       <button id="shoot">Shoot Parrot</button>
+
+        <h2>Code:</h2>
+        <pre id="code" class="prettyprint"/>
+
+        <script type="text/javascript">
+            var worker = new Worker('rude-worker.js');
+            var counter = 0;
+            worker.onmessage = function(e) {
+                $("#response").html(e.data);
+            };
+
+            $("#hello").on('click', function() {
+                counter++;
+                worker.postMessage({val: counter});
+            });
+
+            $("#shoot").on('click', function() {
+                worker.terminate();
+                $("#response").html('*DEAD*');
+            });
+        </script>
+
+        <script type="text/javascript">
+            $('#code').html($('script')[2].textContent);
+            prettyPrint();
+        </script>
+    </body>
+</html>

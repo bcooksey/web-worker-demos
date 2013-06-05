@@ -1,0 +1,45 @@
+<!DOCTYPE html >
+<html>
+    <head>
+        <script src="/jquery-1.9.1.js"></script>
+        <script src="/prettify.js"></script>
+        <link href="/prettify.css" type="text/css" rel="stylesheet" />
+    </head>
+    <body>
+        <h1>Inline Web Worker Demo (Polite Parrot)</h1>
+        Parrot Says: <span id="response">Nothin Yet</span>
+        <br/>
+        <button id="hello">Say Hello</button>
+
+        <h2>Code:</h2>
+        <pre id="code" class="prettyprint"/>
+
+        <script type="text/javascript">
+            var workerCode = function() {
+                onmessage = function(e) {
+                    self.postMessage("Sir, you gave me a " + e.data.val);
+                };
+            };
+
+            var blob = new Blob(['(' + workerCode.toString() + ')();'], {type: "text/javascript"});
+            // Obtain a blob URL reference to our worker 'file'.
+            var blobURL = window.URL.createObjectURL(blob);
+            var worker = new Worker(blobURL);
+
+            var counter = 0;
+            worker.onmessage = function(e) {
+                $("#response").html(e.data);
+            };
+
+            $("#hello").on('click', function() {
+                counter++;
+                worker.postMessage({val: counter});
+            });
+        </script>
+
+        <script type="text/javascript">
+            $('#code').html($('script')[2].textContent);
+            prettyPrint();
+        </script>
+    </body>
+</html>
