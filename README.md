@@ -13,6 +13,7 @@ Serve up the root of the project with your favorite static web server and you ar
 Node.js
 
 ```npm install http-server -g```
+
 ```http-server -p 8080```
 
 Python
