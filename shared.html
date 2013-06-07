@@ -11,12 +11,14 @@
        <br/>
        <button id="hello">Say Hello</button>
 
-        <h2>Code:</h2>
-        <pre id="code" class="prettyprint"/>
+        <h2>Client Code:</h2>
+        <pre id="client-code" class="prettyprint lang-javascript"></pre>
+        <h2>Worker Code:</h2>
+        <pre id="worker-code" class="prettyprint lang-javascript"></pre>
 
         <script type="text/javascript">
-            var worker = new SharedWorker('chatty-worker.js');
             var guid = Math.round(Math.random() * 1000);
+            var worker = new SharedWorker('chatty-worker.js');
             
             // Note we have to deal with port now
             worker.port.onmessage = function(e) {
@@ -36,13 +38,13 @@
             });
 
             // You are supposed to start the worker.
-            // From experience, the forst postMessage will do this for you
+            // From experience, the first postMessage will do this for you
             worker.port.start();
         </script>
 
         <script type="text/javascript">
-            $('#code').html($('script')[2].textContent);
-            prettyPrint();
+            $('#client-code').html($('script')[2].textContent);
+            $.ajax('chatty-worker.js', { success: function(code) {$('#worker-code').html(code); prettyPrint();} });
         </script>
     </body>
 </html>
