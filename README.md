@@ -2,9 +2,9 @@
 
 Three demos showing off web workers:
 
-  1. basic - A simple dedicated web worker
-  1. inline - Showing how you can use inline JS to power a dedicated worker. Good if you minify
-  1. shared - Simple example of a shared worker
+  1. basic.html - A simple dedicated web worker.
+  1. inline.html - Showing how you can use inline JS to power a dedicated worker. Good if you minify
+  1. shared.html - Simple example of a shared worker. Open two tabs and watch how the worker interacts with both
 
 # Install
 

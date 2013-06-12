@@ -18,7 +18,7 @@
         <pre id="worker-code" class="prettyprint lang-javascript"></pre>
 
         <script type="text/javascript">
-            var worker = new Worker('rude-worker.js');
+            var worker = new Worker('basic-worker.js');
             var counter = 0;
             worker.onmessage = function(e) {
                 $("#response").html(e.data);
@@ -37,7 +37,7 @@
 
         <script type="text/javascript">
             $('#client-code').html($('script')[2].textContent);
-            $.ajax('rude-worker.js', { success: function(code) {$('#worker-code').html(code); prettyPrint();} });
+            $.ajax('basic-worker.js', { success: function(code) {$('#worker-code').html(code); prettyPrint();} });
         </script>
     </body>
 </html>

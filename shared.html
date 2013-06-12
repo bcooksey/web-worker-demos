@@ -18,7 +18,7 @@
 
         <script type="text/javascript">
             var guid = Math.round(Math.random() * 1000);
-            var worker = new SharedWorker('chatty-worker.js');
+            var worker = new SharedWorker('shared-worker.js');
             
             // Note we have to deal with port now
             worker.port.onmessage = function(e) {
@@ -44,7 +44,7 @@
 
         <script type="text/javascript">
             $('#client-code').html($('script')[2].textContent);
-            $.ajax('chatty-worker.js', { success: function(code) {$('#worker-code').html(code); prettyPrint();} });
+            $.ajax('shared-worker.js', { success: function(code) {$('#worker-code').html(code); prettyPrint();} });
         </script>
     </body>
 </html>
