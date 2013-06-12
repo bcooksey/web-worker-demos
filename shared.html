@@ -36,10 +36,6 @@
                 // Messages must go to our port
                 worker.port.postMessage({message: 'hello', guid: guid});
             });
-
-            // You are supposed to start the worker.
-            // From experience, the first postMessage will do this for you
-            worker.port.start();
         </script>
 
         <script type="text/javascript">
